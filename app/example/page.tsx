@@ -1,4 +1,6 @@
 import Image from "next/image";
+import HomeIconComponent from "../ui/example/homeicon";
+import Buttonexample from "../ui/example/buttonexample";
 
 export default function Home() {
   return (
@@ -49,6 +51,7 @@ export default function Home() {
           >
             Read our docs
           </a>
+          <Buttonexample />
         </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
@@ -97,6 +100,7 @@ export default function Home() {
           />
           Go to nextjs.org →
         </a>
+        <HomeIconComponent />
       </footer>
     </div>
   );
