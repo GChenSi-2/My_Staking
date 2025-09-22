@@ -71,5 +71,34 @@ export const rows: GridRowsProp = [
     status: 'Active',
     button: 'Stake',
   },
+  {
+    id: 2,
+    validators: 'DIGITALIX',
+    liveApr: '4.5%',
+    totalStake: 230000000,
+    uptime: 93.9,
+    status: 'Renounced',
+    button: 'Stake',
+  },
+    {
+    id: 3,
+    validators: 'FLESIDEK',
+    liveApr: '4.5%',
+    totalStake: 130000000,
+    uptime: 93.9,
+    status: 'Active',
+    button: 'Stake',
+  },
+    {
+    id: 4,
+    validators: 'YOKOHAMALEX',
+    liveApr: '4.5%',
+    totalStake: 430000000,
+    uptime: 73.9,
+    status: 'Active',
+    button: 'Stake',
+  },
+
+
 
 ];
