@@ -1,6 +1,7 @@
 'use client'
 import * as React from 'react';
 import Chip from '@mui/material/Chip';
+import Button from '@mui/material/Button';
 import {GridRowsProp, GridColDef} from '@mui/x-data-grid';
 
 function renderStatus(status: 'Active' | 'Renounced') {
@@ -58,6 +59,19 @@ export const columns: GridColDef[] = [
     headerName: '',
     flex: 0.5,
     minWidth: 80,
+    renderCell: (params) => (
+      <Button
+        variant="contained"
+        size="small"
+        onClick={() => {
+          // 获取当前行的 id
+          const rowId = params.row.id; // 或 params.id
+          alert(`当前行ID: ${rowId}`);
+        }}
+      >
+        Stake
+      </Button>
+    ),
   },
 ];
 
