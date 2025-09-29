@@ -1,4 +1,4 @@
-'use client'
+'use client';
 // import * as React from 'react';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import type {} from '@mui/x-charts/themeAugmentation';
@@ -13,8 +13,7 @@ import ShowScheme from '../ui/test/ShowScheme';
 import AppNavbar from '../ui/dashboard/AppNavbar';
 import Header from '../ui/dashboard/Hearder';
 import MainGrid from '../ui/dashboard/MainGrid';
-
-
+import ReownButton from '../ui/dashboard/TestAppKit';
 
 export default function Dashboard(props: { disableCustomTheme?: boolean }) {
   return (
@@ -25,7 +24,7 @@ export default function Dashboard(props: { disableCustomTheme?: boolean }) {
         {/* Main content */}
         <Box
           component="main"
-          sx={(theme) => {
+          sx={theme => {
             console.log('theme:', theme); // 这里打印 theme
             return {
               flexGrow: 1,
@@ -49,6 +48,7 @@ export default function Dashboard(props: { disableCustomTheme?: boolean }) {
             <AppNavbar />
             <Header />
             <MainGrid />
+            <ReownButton />
           </Stack>
         </Box>
       </Box>

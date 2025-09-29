@@ -1,29 +1,29 @@
 'use client';
 
 // Update the import path to the correct relative path if config.tsx is in the same folder
-import { wagmiAdapter, projectId } from './config';
+import { wagmiAdapter, solanaAdapter, projectId, metadata } from './config';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createAppKit } from '@reown/appkit/react';
-import { mainnet, arbitrum } from '@reown/appkit/networks';
+import {
+  mainnet,
+  arbitrum,
+  solana,
+  polygon,
+  solanaTestnet,
+  solanaDevnet,
+} from '@reown/appkit/networks';
 import React, { type ReactNode } from 'react';
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi';
 
 // Set up queryClient
 const queryClient = new QueryClient();
 
-const metadata = {
-  name: 'My Staking',
-  description: 'Next.js + wagmi + Reown AppKit',
-  url: 'https://example.com',
-  icons: ['https://example.com/icon.png'],
-};
-
-// Create the modal
+// Create the modal with both adapters
 const modal = createAppKit({
-  adapters: [wagmiAdapter],
+  adapters: [wagmiAdapter, solanaAdapter],
   projectId,
-  networks: [mainnet, arbitrum],
-  defaultNetwork: mainnet,
+  networks: [mainnet, arbitrum, polygon, solana, solanaTestnet, solanaDevnet],
+  defaultNetwork: solana,
   metadata: metadata,
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration

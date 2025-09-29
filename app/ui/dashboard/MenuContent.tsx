@@ -14,6 +14,8 @@ import StakingIcon from '../icons/Staking';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import Box from '@mui/material/Box';
+import ReownButton from './TestAppKit';
 
 const mainListItems = [
   {
@@ -130,9 +132,9 @@ export default function MenuContent({ collapsed }: { collapsed: boolean }) {
           </div>
         ))}
       </List>
-      {/* <Box sx={{ mt: 2 }}>
-            <ColorModeSelect />
-          </Box> */}
+      <Box sx={{ mt: 2 }}>
+        <ReownButton />
+      </Box>
     </Stack>
   );
 }
