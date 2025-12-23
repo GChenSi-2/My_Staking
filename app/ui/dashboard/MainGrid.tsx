@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 import MyValidators from './MyValidators';
 import MyStaking from './MyStaking';
+import TailwindTest from '../test/TailwindTest';
 
 export default function MainGrid() {
   // 用 nuqs 管理 tab 状态
@@ -26,6 +27,7 @@ export default function MainGrid() {
     </Box>,
     <Box key="panel-3" sx={{ p: 0 }}>
       <Typography variant="h6">Tab 3 内容</Typography>
+      <TailwindTest />
     </Box>,
   ];
 
