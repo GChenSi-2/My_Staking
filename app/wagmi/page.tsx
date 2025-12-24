@@ -14,6 +14,7 @@ import NetworkSwitcher from './components/NetworkSwitcher';
 import TokenBalance from './components/TokenBalance';
 import TransactionSender from './components/TransactionSender';
 import ContractInteraction from './components/ContractInteraction';
+import ConnectionDebug from './components/ConnectionDebug';
 
 export default function WagmiDemo() {
   return (
@@ -36,8 +37,22 @@ export default function WagmiDemo() {
       </Paper>
 
       <Grid container spacing={4}>
+        {/* 调试信息 */}
+        <Grid size={12}>
+          <Box>
+            <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
+              🔍 连接调试
+            </Typography>
+            <ConnectionDebug />
+          </Box>
+        </Grid>
+
+        <Grid size={12}>
+          <Divider sx={{ my: 2 }} />
+        </Grid>
+
         {/* 钱包连接 */}
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Box>
             <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
               🔗 钱包连接
@@ -47,7 +62,7 @@ export default function WagmiDemo() {
         </Grid>
 
         {/* 网络切换 */}
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Box>
             <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
               🌐 网络切换
@@ -57,7 +72,7 @@ export default function WagmiDemo() {
         </Grid>
 
         {/* 代币余额 */}
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Box>
             <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
               💰 代币余额查询
@@ -66,12 +81,12 @@ export default function WagmiDemo() {
           </Box>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Divider sx={{ my: 2 }} />
         </Grid>
 
         {/* 交易发送 */}
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Box>
             <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
               📤 发送交易
@@ -80,12 +95,12 @@ export default function WagmiDemo() {
           </Box>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Divider sx={{ my: 2 }} />
         </Grid>
 
         {/* 智能合约交互 */}
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Box>
             <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
               📋 智能合约交互
@@ -101,7 +116,7 @@ export default function WagmiDemo() {
           📚 功能说明
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Typography variant="subtitle2" gutterBottom>
               🔗 钱包连接组件
             </Typography>
@@ -133,7 +148,7 @@ export default function WagmiDemo() {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Typography variant="subtitle2" gutterBottom>
               📤 交易发送组件
             </Typography>

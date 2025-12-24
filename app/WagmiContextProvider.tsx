@@ -5,6 +5,7 @@ import { wagmiAdapter, solanaAdapter, projectId, metadata } from './config';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createAppKit } from '@reown/appkit/react';
 import {
+  sepolia,
   mainnet,
   arbitrum,
   solana,
@@ -19,14 +20,22 @@ import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi';
 const queryClient = new QueryClient();
 
 // Create the modal with both adapters
-const modal = createAppKit({
+createAppKit({
   adapters: [wagmiAdapter, solanaAdapter],
   projectId,
-  networks: [mainnet, arbitrum, polygon, solana, solanaTestnet, solanaDevnet],
-  defaultNetwork: solana,
+  networks: [
+    mainnet,
+    sepolia,
+    arbitrum,
+    polygon,
+    solana,
+    solanaTestnet,
+    solanaDevnet,
+  ],
+  defaultNetwork: mainnet,
   metadata: metadata,
   features: {
-    analytics: true, // Optional - defaults to your Cloud configuration
+    analytics: true,
   },
 });
 
@@ -37,10 +46,14 @@ export default function ContextProvider({
   children: ReactNode;
   cookies: string | null;
 }) {
+  // 如果要禁用自动重连，可以注释掉下面这行，直接使用 undefined
   const initialState = cookieToInitialState(
     wagmiAdapter.wagmiConfig as Config,
     cookies
   );
+
+  // 要禁用自动重连，使用这个替代：
+  // const initialState = undefined;
 
   return (
     <WagmiProvider

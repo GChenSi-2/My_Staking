@@ -90,11 +90,11 @@ export default function NetworkSwitcher() {
           </Box>
         )}
 
-        {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
-            切换网络失败: {error.message}
-          </Alert>
-        )}
+        {/*{error && (*/}
+        {/*  <Alert severity="error" sx={{ mt: 2 }}>*/}
+        {/*    切换网络失败: {error.message}*/}
+        {/*  </Alert>*/}
+        {/*)}*/}
 
         <Typography
           variant="caption"
