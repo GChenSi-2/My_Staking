@@ -12,15 +12,27 @@ const DEFAUlT_ITEMS: itemsList = [
   { id: 8, name: "Viem" },
 ];
 
-export function MiniSearchList(): Element {
+export function MiniSearchList(): React.JSX.Element {
   const [q, setQ] = useState<string>("");
   const [items] = useState<itemsList>(DEFAUlT_ITEMS);
 
-  //   const filtered = useMemo(() =>{
-  //     const keyword = q.trim.
-  //
-  //   }, [q, items]);
-  // }
+  // const filtered = useMemo(() => {
+  //   const keyword = q.trim().toLowerCase();
+  //   console.log(keyword);
+  //   if (!keyword) return items;
+  //   const filteredList = items.filter((item) => item.name.includes(keyword));
+  //   console.log(filteredList);
+  //   return filteredList
+  // }, [q, items]);
+
+
+  const keyword = (q ?? "").trim().toLowerCase();
+
+  const filtered = !keyword
+    ? items
+    : items.filter(item =>
+      item.name.toLowerCase().includes(keyword)
+    );
 
   return (
     <div className="w-full max-w-md rounded-2xl border bg-blue-200 p-5 mt-5 shadow-md">
@@ -39,10 +51,26 @@ export function MiniSearchList(): Element {
           Clear
         </button>
       </div>
-      <div className="flex mt-5 items-center gap-2">
-        {DEFAUlT_ITEMS.map((item: any) => (
-          <span className="font-medium">{item.name}</span>
-        ))}
+      <div className="mt-4 rounded-xl bg-blue-300">
+        {filtered.length > 0 && (
+          <ul className="flex-col">
+            {filtered.map((item) => (
+              <li
+                key={item.id}
+                className="flex items-center gap-3 rounded-2xl border mt-2 pt-1 px-4"
+              >
+                <span>{item.id}</span>
+                <span>{item.name}</span>
+
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="flex mt-5 items-center gap-2">
+          {DEFAUlT_ITEMS.map((item: any) => (
+            <span className="font-medium px-3">{item.name}</span>
+          ))}
+        </div>
       </div>
     </div>
   );
