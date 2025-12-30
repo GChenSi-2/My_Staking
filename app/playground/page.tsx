@@ -1,7 +1,8 @@
 'use client';
-import { CounterCard } from "../toyui/counterCard";
-import { MiniSearchList } from "../toyui/miniSearchList";
-import { TodoList } from "../toyui/todoList";
+import { CounterCard } from '../toyui/counterCard';
+import { MiniSearchList } from '../toyui/miniSearchList';
+import { TodoList } from '../toyui/todoList';
+import FakeFetch from '../toyui/fakeFetch';
 
 export default function Page() {
   return (
@@ -10,6 +11,7 @@ export default function Page() {
       <CounterCard />
       <MiniSearchList />
       <TodoList />
+      <FakeFetch />
     </div>
   );
 }
