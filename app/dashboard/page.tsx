@@ -17,9 +17,8 @@ import ReownButton from '../ui/dashboard/TestAppKit';
 
 export default function Dashboard(props: { disableCustomTheme?: boolean }) {
   return (
-    <AppTheme {...props}>
+    <>
       <CssBaseline enableColorScheme />
-      {/* <ShowScheme /> */}
       <Box sx={{ display: 'flex' }}>
         {/* Main content */}
         <Box
@@ -52,6 +51,6 @@ export default function Dashboard(props: { disableCustomTheme?: boolean }) {
           </Stack>
         </Box>
       </Box>
-    </AppTheme>
+    </>
   );
 }
