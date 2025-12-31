@@ -12,12 +12,14 @@ export default function FakeFetch(): React.ReactElement {
   const [post, setPost] = useState<Todo | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
   const fetchData = async (): Promise<void> => {
     try {
       setLoading(true);
-      console.log(loading);
       setError(null);
+
+      // 添加3秒延迟来测试Suspense fallback效果
+      await delay(3000);
+
       const response: Response = await fetch(
         'https://jsonplaceholder.typicode.com/todos/1'
       );
@@ -28,17 +30,16 @@ export default function FakeFetch(): React.ReactElement {
 
       const json: Todo = await response.json();
       setPost(json);
-      console.log(post);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : 'An unknown error occurred'
       );
     } finally {
       setLoading(false);
-      console.log(loading);
     }
   };
 
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
   useEffect(() => {
     fetchData();
   }, []);
