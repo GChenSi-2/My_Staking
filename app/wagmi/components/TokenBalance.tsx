@@ -154,7 +154,7 @@ export default function TokenBalance() {
               }}
             >
               <Typography variant="h5">
-                {parseFloat(nativeBalance.formatted).toFixed(6)}{' '}
+                {parseFloat(formatUnits(nativeBalance.value, nativeBalance.decimals)).toFixed(6)}{' '}
                 {nativeBalance.symbol}
               </Typography>
               <Typography variant="body2" sx={{ opacity: 0.8 }}>

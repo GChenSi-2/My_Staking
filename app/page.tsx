@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import type * as THREE from 'three';
 
 export default function LandingPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

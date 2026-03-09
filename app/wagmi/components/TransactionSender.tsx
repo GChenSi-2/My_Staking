@@ -21,7 +21,7 @@ import {
   StepLabel,
   Link,
 } from '@mui/material';
-import { parseEther, isAddress, formatEther } from 'viem';
+import { parseEther, isAddress, formatEther, formatUnits } from 'viem';
 
 export default function TransactionSender() {
   const { address, isConnected, chain } = useAccount();
@@ -76,7 +76,7 @@ export default function TransactionSender() {
   const isValidAddress = toAddress && isAddress(toAddress);
   const isValidAmount = amount && parseFloat(amount) > 0;
   const hasEnoughBalance =
-    balance && amount && parseFloat(amount) <= parseFloat(balance.formatted);
+    balance && amount && parseFloat(amount) <= parseFloat(formatUnits(balance.value, balance.decimals));
 
   React.useEffect(() => {
     if (isSendPending) {
@@ -125,7 +125,7 @@ export default function TransactionSender() {
               当前余额:
             </Typography>
             <Typography variant="h6">
-              {parseFloat(balance.formatted).toFixed(6)} {balance.symbol}
+              {parseFloat(formatUnits(balance.value, balance.decimals)).toFixed(6)} {balance.symbol}
             </Typography>
           </Box>
         )}
@@ -194,7 +194,7 @@ export default function TransactionSender() {
               onChange={e => setAmount(e.target.value)}
               placeholder="0.001"
               type="number"
-              step="0.000001"
+              slotProps={{ htmlInput: { step: '0.000001' } }}
               sx={{ mb: 2 }}
               error={amount !== '' && (!isValidAmount || !hasEnoughBalance)}
               helperText={

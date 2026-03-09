@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-function useLocalStorageState(key, initialValue) {
-  const [state, setState] = useState(() => {
+type Todo = { id: string; title: string; done: boolean };
+
+function useLocalStorageState(key: string, initialValue: Todo[]) {
+  const [state, setState] = useState<Todo[]>(() => {
     try {
       const raw = localStorage.getItem(key);
       return raw ? JSON.parse(raw) : initialValue;
@@ -10,7 +12,7 @@ function useLocalStorageState(key, initialValue) {
     }
   });
 
-  return [state, setState];
+  return [state, setState] as const;
 }
 
 export function TodoList() {
@@ -29,9 +31,8 @@ export function TodoList() {
       // ignore
     }
   }, [key, todos]);
-  // console.log(localStorage);
 
-  function addTodo(e) {
+  function addTodo(e: React.FormEvent) {
     e.preventDefault();
     const value = text.trim();
     if (!value) return;
@@ -43,13 +44,13 @@ export function TodoList() {
     setText("");
   }
 
-  function toggle(id) {
+  function toggle(id: string) {
     setTodos((prev) =>
       prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t))
     );
   }
 
-  function remove(id) {
+  function remove(id: string) {
     setTodos((prev) => prev.filter((t) => t.id !== id));
   }
 

@@ -28,9 +28,10 @@ export default async function RootLayout({
   const headersObj = await headers();
   const cookies = headersObj.get('cookie');
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         <ContextProvider cookies={cookies}>
           <NuqsAdapter>{children}</NuqsAdapter>
