@@ -61,7 +61,7 @@ export default function ConnectWallet() {
 
   if (isConnected && address) {
     return (
-      <Card sx={{ maxWidth: 400, margin: 'auto', mt: 2 }}>
+      <Card sx={{ width: '100%', maxWidth: { xs: '100%', md: 600 }, mt: 2 }}>
         <CardContent>
           <Typography variant="h6" gutterBottom color="success.main">
             ✅ 钱包已连接
@@ -164,7 +164,7 @@ export default function ConnectWallet() {
   }
 
   return (
-    <Card sx={{ maxWidth: 400, margin: 'auto', mt: 2 }}>
+    <Card sx={{ width: '100%', maxWidth: { xs: '100%', md: 600 }, mt: 2 }}>
       <CardContent sx={{ textAlign: 'center' }}>
         <Typography variant="h6" gutterBottom>
           连接您的钱包
