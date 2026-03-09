@@ -12,6 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
+import ConnectWallet from '@/app/wagmi/components/ConnectWallet';
 export default function MyStaking() {
   return (
     <Box sx={{ width: '100%', px: 0, py: 0 }}>
@@ -29,11 +30,23 @@ export default function MyStaking() {
       >
         <Box sx={{ flexGrow: '3' }}>
           {/* 占 3/5 宽度的内容 */}
-          <div className="relative mx-auto flex w-full flex-col rounded-[16px] p-4 md:p-6 h-[208px] md:h-[266px]">
+          {/* <div className="relative mx-auto flex w-full flex-col rounded-[16px] p-4 md:p-6 h-[208px] md:h-[266px]">
             我占三份
-          </div>
+          </div> */}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              '& .MuiCard-root': { ml: 0, mr: 'auto' },
+            }}
+          >
+            <ConnectWallet />
+          </Box>
         </Box>
-        <Box sx={{ flexGrow: '2' }}>{/* 占 2/5 宽度的内容 */}我占二份</Box>
+        <Box sx={{ flexGrow: '2' }}>
+          {/* 占 2/5 宽度的内容 */}
+          我占二份
+        </Box>
       </Box>
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', gap: 3, mb: 2 }}

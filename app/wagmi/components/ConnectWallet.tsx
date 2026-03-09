@@ -10,12 +10,18 @@ import {
   Box,
   Chip,
 } from '@mui/material';
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import { useAppKit } from '@reown/appkit/react';
 
 export default function ConnectWallet() {
-  const { address, isConnected, chain } = useAccount();
+  const { address, isConnected, chain, connector } = useAccount();
   const { disconnect } = useDisconnect();
   const { open } = useAppKit();
+  const [showIconFallback, setShowIconFallback] = React.useState(false);
+
+  React.useEffect(() => {
+    setShowIconFallback(!connector?.icon);
+  }, [connector?.icon]);
 
   // 改进的断开连接功能
   const handleDisconnect = async () => {
@@ -70,7 +76,7 @@ export default function ConnectWallet() {
               sx={{
                 fontFamily: 'monospace',
                 wordBreak: 'break-all',
-                backgroundColor: 'grey.100',
+                backgroundColor: 'action.hover',
                 padding: 1,
                 borderRadius: 1,
               }}
@@ -78,6 +84,47 @@ export default function ConnectWallet() {
               {address}
             </Typography>
           </Box>
+
+          {connector && (
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                钱包类型:
+              </Typography>
+              <Box
+                sx={{
+                  component: 'div',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                }}
+              >
+                <Chip
+                  label={connector.name}
+                  color="secondary"
+                  size="small"
+                  sx={{ fontWeight: 'bold' }}
+                />
+                {showIconFallback ? (
+                  <Box
+                    component="span"
+                    sx={{
+                      width: 16,
+                      height: 16,
+                      borderRadius: '50%',
+                      bgcolor: 'grey.400',
+                    }}
+                  />
+                ) : (
+                  <Box
+                    component="img"
+                    src={connector.icon}
+                    onError={() => setShowIconFallback(true)}
+                    sx={{ width: 22, height: 22 }}
+                  />
+                )}
+              </Box>
+            </Box>
+          )}
 
           {chain && (
             <Box sx={{ mb: 2 }}>
@@ -129,6 +176,7 @@ export default function ConnectWallet() {
           variant="contained"
           size="large"
           onClick={() => open()}
+          endIcon={<AccountBalanceWalletOutlinedIcon />}
           sx={{ minWidth: 200 }}
         >
           连接钱包
