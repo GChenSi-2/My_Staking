@@ -72,17 +72,36 @@ export default function LandingPage() {
       const torusKnot = new THREE.Mesh(torusKnotGeo, torusKnotMat);
       scene.add(torusKnot);
 
-      // Inner glowing solid core
-      const coreMat = new THREE.MeshBasicMaterial({
-        color: 0x4f46e5,
+      // Inner glowing core — children of torusKnot so rotation/scale auto-syncs
+      // Inner fill: additive blending gives a real glow rather than opacity overlay
+      const coreFillMat = new THREE.MeshBasicMaterial({
+        color: 0x818cf8,
         transparent: true,
-        opacity: 0.08,
+        opacity: 0.28,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
       });
-      const coreGeo = new THREE.TorusKnotGeometry(7, 2.2, 80, 16);
-      scene.add(new THREE.Mesh(coreGeo, coreMat));
+      torusKnot.add(new THREE.Mesh(new THREE.TorusKnotGeometry(7, 2.2, 80, 16), coreFillMat));
+
+      // Outer halo: slightly larger geometry bleeds past the wireframe for a bloom effect
+      const coreHaloMat = new THREE.MeshBasicMaterial({
+        color: 0xa78bfa,
+        transparent: true,
+        opacity: 0.1,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+      torusKnot.add(new THREE.Mesh(new THREE.TorusKnotGeometry(7.5, 2.7, 60, 12), coreHaloMat));
 
       // ── Orbiting rings ──────────────────────────────────────────
-      const mkRing = (r: number, tube: number, color: number, opacity: number, rx: number, ry: number) => {
+      const mkRing = (
+        r: number,
+        tube: number,
+        color: number,
+        opacity: number,
+        rx: number,
+        ry: number
+      ) => {
         const mesh = new THREE.Mesh(
           new THREE.TorusGeometry(r, tube, 16, 128),
           new THREE.MeshBasicMaterial({ color, transparent: true, opacity })
@@ -101,9 +120,10 @@ export default function LandingPage() {
       const nodeColors = [0x818cf8, 0xa78bfa, 0x6366f1, 0xc4b5fd, 0x7c3aed];
       for (let i = 0; i < 70; i++) {
         const size = 0.15 + Math.random() * 0.25;
-        const geo = Math.random() > 0.5
-          ? new THREE.OctahedronGeometry(size, 0)
-          : new THREE.TetrahedronGeometry(size, 0);
+        const geo =
+          Math.random() > 0.5
+            ? new THREE.OctahedronGeometry(size, 0)
+            : new THREE.TetrahedronGeometry(size, 0);
         const mat = new THREE.MeshBasicMaterial({
           color: nodeColors[Math.floor(Math.random() * nodeColors.length)],
           wireframe: Math.random() > 0.6,
@@ -164,8 +184,8 @@ export default function LandingPage() {
 
           // Zoom camera in
           camera.position.z = Math.max(30 - ease * 29, 1);
-          camera.position.x *= (1 - ease * 0.1);
-          camera.position.y *= (1 - ease * 0.1);
+          camera.position.x *= 1 - ease * 0.1;
+          camera.position.y *= 1 - ease * 0.1;
         } else {
           // Normal idle animation
           torusKnot.rotation.x += 0.003;
@@ -187,6 +207,14 @@ export default function LandingPage() {
           // Camera gentle drift
           camera.position.x = Math.sin(t * 0.35) * 3;
           camera.position.y = Math.cos(t * 0.25) * 2;
+
+          // Pulse the glowing core (breathing effect)
+          const pulse = Math.sin(t * 1.8);          // ~3.5s per cycle
+          const pulse2 = Math.sin(t * 1.8 + 1.2);  // slight phase offset for halo
+          const fillMesh = torusKnot.children[0] as THREE.Mesh;
+          const haloMesh = torusKnot.children[1] as THREE.Mesh;
+          if (fillMesh) (fillMesh.material as THREE.MeshBasicMaterial).opacity = 0.18 + 0.14 * pulse;
+          if (haloMesh) (haloMesh.material as THREE.MeshBasicMaterial).opacity = 0.05 + 0.07 * pulse2;
         }
 
         camera.lookAt(0, 0, 0);
@@ -204,7 +232,9 @@ export default function LandingPage() {
     };
 
     let disposeThree: (() => void) | void;
-    initThree().then(fn => { disposeThree = fn; });
+    initThree().then(fn => {
+      disposeThree = fn;
+    });
 
     return () => {
       cancelled = true;
@@ -288,7 +318,14 @@ export default function LandingPage() {
               display: 'inline-block',
             }}
           />
-          <span style={{ color: '#c4b5fd', fontSize: 13, letterSpacing: '0.06em', fontWeight: 500 }}>
+          <span
+            style={{
+              color: '#c4b5fd',
+              fontSize: 13,
+              letterSpacing: '0.06em',
+              fontWeight: 500,
+            }}
+          >
             Web3 · Decentralized Staking
           </span>
         </div>
@@ -302,7 +339,8 @@ export default function LandingPage() {
             letterSpacing: '-0.02em',
             lineHeight: 1.05,
             textAlign: 'center',
-            background: 'linear-gradient(135deg, #e0e7ff 0%, #818cf8 40%, #a78bfa 70%, #c4b5fd 100%)',
+            background:
+              'linear-gradient(135deg, #e0e7ff 0%, #818cf8 40%, #a78bfa 70%, #c4b5fd 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -318,7 +356,8 @@ export default function LandingPage() {
           style={{
             width: 80,
             height: 1,
-            background: 'linear-gradient(90deg, transparent, #6366f1, transparent)',
+            background:
+              'linear-gradient(90deg, transparent, #6366f1, transparent)',
             margin: '24px 0',
           }}
         />
@@ -363,7 +402,14 @@ export default function LandingPage() {
               >
                 {value}
               </div>
-              <div style={{ fontSize: 12, color: '#64748b', letterSpacing: '0.08em', marginTop: 4 }}>
+              <div
+                style={{
+                  fontSize: 12,
+                  color: '#64748b',
+                  letterSpacing: '0.08em',
+                  marginTop: 4,
+                }}
+              >
                 {label}
               </div>
             </div>
@@ -385,12 +431,14 @@ export default function LandingPage() {
             border: 'none',
             borderRadius: 100,
             cursor: 'pointer',
-            boxShadow: '0 0 32px rgba(99,102,241,0.5), 0 0 64px rgba(99,102,241,0.2)',
+            boxShadow:
+              '0 0 32px rgba(99,102,241,0.5), 0 0 64px rgba(99,102,241,0.2)',
             transition: 'transform 0.2s ease, box-shadow 0.2s ease',
             outline: 'none',
           }}
           onMouseEnter={e => {
-            (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.05)';
+            (e.currentTarget as HTMLButtonElement).style.transform =
+              'scale(1.05)';
             (e.currentTarget as HTMLButtonElement).style.boxShadow =
               '0 0 48px rgba(99,102,241,0.7), 0 0 96px rgba(99,102,241,0.3)';
           }}
@@ -401,7 +449,16 @@ export default function LandingPage() {
           }}
         >
           Launch App
-          <span style={{ marginLeft: 10, opacity: 0.8, fontSize: 18, verticalAlign: 'middle' }}>→</span>
+          <span
+            style={{
+              marginLeft: 10,
+              opacity: 0.8,
+              fontSize: 18,
+              verticalAlign: 'middle',
+            }}
+          >
+            →
+          </span>
         </button>
 
         {/* Sub-label */}
@@ -415,7 +472,8 @@ export default function LandingPage() {
         style={{
           position: 'fixed',
           inset: 0,
-          background: 'radial-gradient(circle at center, #1a1a3e 0%, #050510 60%, #000 100%)',
+          background:
+            'radial-gradient(circle at center, #1a1a3e 0%, #050510 60%, #000 100%)',
           opacity: transitioning ? 1 : 0,
           transition: 'opacity 1.3s cubic-bezier(0.4, 0, 0.2, 1)',
           pointerEvents: transitioning ? 'all' : 'none',
