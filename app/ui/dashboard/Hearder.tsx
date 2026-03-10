@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import NavbarBreadcrumbs from './NavbarBreadcrumbs';
@@ -24,7 +23,7 @@ export default function Header() {
       <NavbarBreadcrumbs />
       <Stack direction="row" sx={{ gap: 1 }}>
         <Search />
-        <MenuButton showBadge aria-label="Open notifications">
+        <MenuButton showBadge={false} aria-label="Open notifications">
           <NotificationsRoundedIcon />
         </MenuButton>
         {/* <ColorModeIconDropdown /> */}
