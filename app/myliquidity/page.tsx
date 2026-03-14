@@ -1,17 +1,23 @@
 'use client';
 
-import { useState } from 'react';
 import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import { useQueryState } from 'nuqs';
 import { TokenETH, TokenUSDC } from '@web3icons/react';
 import CustomizedTabs, {
   defaultActiveTab,
   getActivePanel,
 } from '../ui/liquidity/CustomizedTabs';
+import { isTabValue } from '../ui/liquidity/liquidityTabsConfig';
 
 export default function MyLiquidity() {
-  const [activeTab, setActiveTab] = useState(defaultActiveTab);
+  const [activeTab, setActiveTab] = useQueryState('tab', {
+    history: 'push',
+    defaultValue: defaultActiveTab,
+    parse: value => (isTabValue(value) ? value : defaultActiveTab),
+    serialize: value => value,
+  });
   const ActivePanel = getActivePanel(activeTab);
 
   return (

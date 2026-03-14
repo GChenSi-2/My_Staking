@@ -4,7 +4,9 @@ import RemoveLiquidityPanel from './RemoveLiquidityPanel';
 import StakeLiquidityPanel from './StakeLiquidityPanel';
 import UnstakeLiquidityPanel from './UnstakeLiquidityPanel';
 
-export type TabValue = 'Add' | 'Remove' | 'Stake' | 'Unstake';
+export const tabValues = ['Add', 'Remove', 'Stake', 'Unstake'] as const;
+
+export type TabValue = (typeof tabValues)[number];
 
 export type TabOption = {
   label: string;
@@ -41,4 +43,8 @@ export const panelContent: Record<TabValue, TabPanelConfig> = {
 
 export function getActivePanel(activeTab: TabValue) {
   return panelContent[activeTab].Panel;
+}
+
+export function isTabValue(value: string): value is TabValue {
+  return tabValues.includes(value as TabValue);
 }
