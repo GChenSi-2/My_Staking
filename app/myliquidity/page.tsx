@@ -1,8 +1,19 @@
+'use client';
+
+import { useState } from 'react';
+import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { TokenETH, TokenUSDC } from '@web3icons/react';
+import CustomizedTabs, {
+  defaultActiveTab,
+  getActivePanel,
+} from '../ui/liquidity/CustomizedTabs';
 
 export default function MyLiquidity() {
+  const [activeTab, setActiveTab] = useState(defaultActiveTab);
+  const ActivePanel = getActivePanel(activeTab);
+
   return (
     <Box
       sx={{
@@ -11,7 +22,6 @@ export default function MyLiquidity() {
         pt: 3,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'start',
       }}
     >
       <Box
@@ -34,6 +44,7 @@ export default function MyLiquidity() {
           mt: 1,
           mb: 1,
           width: 'auto',
+          alignSelf: 'flex-start',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
@@ -68,6 +79,45 @@ export default function MyLiquidity() {
           <TokenUSDC size={48} variant="branded" />
         </Box>
       </Box>
+      <Grid container spacing={2} sx={{ width: '100%' }}>
+        <Grid size={7}>
+          <Box
+            sx={{
+              p: 2,
+              borderRadius: 1,
+              boxShadow: 1,
+              borderColor: 'divider',
+            }}
+          >
+            <CustomizedTabs activeTab={activeTab} onChange={setActiveTab} />
+            <Box
+              sx={{
+                width: '100%',
+                minHeight: 220,
+                p: 3,
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 3,
+                bgcolor: 'background.paper',
+              }}
+            >
+              <ActivePanel />
+            </Box>
+          </Box>
+        </Grid>
+        <Grid size={5}>
+          <Box
+            sx={{
+              p: 2,
+              borderRadius: 1,
+              boxShadow: 1,
+              borderColor: 'divider',
+            }}
+          >
+            <Box></Box>
+          </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
