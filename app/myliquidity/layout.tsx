@@ -32,7 +32,7 @@ export default function Layout({
             to   { opacity: 1; transform: scale(1) translateY(0); }
           }
         `}</style>
-        <div className="w-64 flex-col">
+        <div className="shrink-0 flex-col">
           <SideMenu />
         </div>
         <div
