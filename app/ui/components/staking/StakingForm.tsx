@@ -14,7 +14,12 @@ interface StakingFormProps {
   onStake: (amount: string) => Promise<void>;
 }
 
-export default function StakingForm({ validatorName, balance, minStake, onStake }: StakingFormProps) {
+export default function StakingForm({
+  validatorName,
+  balance,
+  minStake,
+  onStake,
+}: StakingFormProps) {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
@@ -32,18 +37,52 @@ export default function StakingForm({ validatorName, balance, minStake, onStake 
     }
   };
 
-  const isValid = amount && parseFloat(amount) >= parseFloat(minStake) && parseFloat(amount) <= parseFloat(balance);
+  const isValid =
+    amount &&
+    parseFloat(amount) >= parseFloat(minStake) &&
+    parseFloat(amount) <= parseFloat(balance);
 
   return (
-    <Box>
-      <Typography variant="body2" sx={{ mb: 2 }}>Stake to {validatorName}</Typography>
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="caption" color="text.secondary">Available Balance: {balance} SOL</Typography>
-        <Typography variant="caption" color="text.secondary" sx={{ ml: 2 }}>Min Stake: {minStake} SOL</Typography>
+    <Box className="w-full">
+      <Typography
+        variant="body2"
+        className="mb-2 text-sm font-medium text-[var(--template-palette-text-primary)]"
+      >
+        Stake to {validatorName}
+      </Typography>
+      <Box className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-lg border border-[var(--template-palette-divider)] bg-[var(--template-palette-background-paper)] px-3 py-2">
+        <Typography
+          variant="caption"
+          className="text-[var(--template-palette-text-secondary)]"
+        >
+          Available Balance: {balance} SOL
+        </Typography>
+        <Typography
+          variant="caption"
+          className="text-[var(--template-palette-text-secondary)]"
+        >
+          Min Stake: {minStake} SOL
+        </Typography>
       </Box>
-      <TextField label="Amount (SOL)" fullWidth type="number" value={amount} onChange={(e) => setAmount(e.target.value)} sx={{ mb: 2 }} />
+      <TextField
+        label="Amount (SOL)"
+        fullWidth
+        type="number"
+        value={amount}
+        onChange={e => setAmount(e.target.value)}
+        className="mb-3"
+      />
       {error && <ErrorMessage error={error} />}
-      <TransactionButton variant="contained" fullWidth onClick={handleStake} loading={loading} disabled={!isValid || loading}>Stake</TransactionButton>
+      <TransactionButton
+        variant="contained"
+        fullWidth
+        onClick={handleStake}
+        loading={loading}
+        disabled={!isValid || loading}
+        className="w-full rounded-xl normal-case"
+      >
+        Stake
+      </TransactionButton>
     </Box>
   );
 }

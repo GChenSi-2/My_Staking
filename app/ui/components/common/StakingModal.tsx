@@ -16,12 +16,26 @@ interface StakingModalProps {
   actions?: ReactNode;
 }
 
-export default function StakingModal({ open, onClose, title, children, actions }: StakingModalProps) {
+export default function StakingModal({
+  open,
+  onClose,
+  title,
+  children,
+  actions,
+}: StakingModalProps) {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         {title}
-        <IconButton onClick={onClose} size="small"><CloseIcon /></IconButton>
+        <IconButton onClick={onClose} size="small">
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
       {actions && <DialogActions>{actions}</DialogActions>}
