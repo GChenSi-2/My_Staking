@@ -1,0 +1,5 @@
+"import codecs"  
+""  
+"content = '''# Staking Portal - Product Requirements Document'''"  
+"with codecs.open('PRD.md', 'w', 'utf-8') as f:"  
+"    f.write(content)"  

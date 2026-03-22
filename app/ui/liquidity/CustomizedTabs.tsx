@@ -103,12 +103,12 @@ export default function CustomizedTabs({
                   fontWeight: 600,
                   color: theme.palette.text.primary,
                   bgcolor: isActive
-                    ? alpha(theme.palette.primary.main, 0.13)
+                    ? alpha(theme.palette.primary.main, 0.15)
                     : 'transparent',
                   '&:hover': {
                     border: 'none',
                     bgcolor: isActive
-                      ? alpha(theme.palette.primary.main, 0.13)
+                      ? alpha(theme.palette.primary.main, 0.15)
                       : alpha(theme.palette.primary.main, 0.1),
                   },
                 })}
